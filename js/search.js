@@ -22,6 +22,12 @@ class search {
             this.search()
         })
 
+        this.input.keydown((e)=> {
+            if(e.keyCode == 13) {
+                this.search()
+            }
+        })
+
         this.depth1.change((e)=> {
             this.options(e.target.selectedIndex)
             this.selectSearch(this.depth1.val(), CITYS[e.target.selectedIndex][0])
