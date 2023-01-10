@@ -22,7 +22,7 @@ class list {
             'color': 'white'
         })
 
-        new map().map(list, $('#searchInput').val(), 11)
+        new map().map(list, $('#searchInput').val(), 11, true)
     }
 
 

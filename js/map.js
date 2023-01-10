@@ -10,14 +10,14 @@ class map {
     }
 
 
-    map(data, txt = "", zoom = 7) {
-        var mapOptions = {
+    map(data, txt = "", zoom = 7, bool = false) {
+        let mapOptions = {
             zoom: zoom,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
 
-        var map = new google.maps.Map(document.getElementById("map"),
+        let map = new google.maps.Map(document.getElementById("map"),
             mapOptions);
 
 
@@ -25,9 +25,9 @@ class map {
             map.setCenter({ lat: 36.48, lng: 127.29 });
 
         } else {
-            var address = txt;
+            let address = txt;
 
-            var geocoder = new google.maps.Geocoder();
+            let geocoder = new google.maps.Geocoder();
             geocoder.geocode({ 'address': address }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);
@@ -40,22 +40,34 @@ class map {
 
 
 
-        var marker
+        let marker
 
         let i = 0
 
-        var infoPop = []
+        let infoPop = []
 
         data.forEach(({ name, postal, road, phone, option1, option2, location }) => {
             let lat = parseFloat(data[i].location.split(',')[0].replaceAll('(', '').replaceAll(' ', ''))
             let lng = parseFloat(data[i].location.split(',')[1].replaceAll(")", '').replaceAll(' ', ''))
-            marker = new google.maps.Marker({
-                position: { lat, lng },
-                i,
-                map,
-            });
 
-            var infowindow = new google.maps.InfoWindow();
+            if(bool) {
+                marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    i,
+                    map,
+                    icon: { url: "//maps.google.com/mapfiles/ms/icons/blue-dot.png" }
+                });
+            } else {
+                marker = new google.maps.Marker({
+                    position: { lat, lng },
+                    i,
+                    map
+                });
+            }
+
+            
+
+            let infowindow = new google.maps.InfoWindow();
             infoPop.push(infowindow)
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
